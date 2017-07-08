@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>Blog Flog!</h1>
+    <form action="/new_blog" method='post'>
+        <label>Phresh Blog, Dog!</label>
+        <input type="text" name="blog_title" />
+        <label>What do you have to say?</label> 
+        <input type="textfield" name="body" />
+        <input type="submit" value="Blog It!" />
+    </form>
+
+
+   
+{% endblock %}

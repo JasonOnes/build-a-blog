@@ -25,7 +25,7 @@ def main_page():
 
     return render_template('welcome.html', blogs=blogs)
     
-@app.route('/blog', methods=['GET', 'POST'])
+@app.route('/new_blog', methods=['GET', 'POST'])
 def blog():
     if request.method == 'POST':
         #blog = Blog.query.get(blog_id)
@@ -38,7 +38,16 @@ def blog():
 
         return render_template('/welcome.html', blogs=blogs)
     
-    return render_template('blog.html')#, blogs=blogs)
+    return render_template('new_blog.html')#, blogs=blogs)
+
+@app.route('/blog', methods=['GET', 'POST'])
+def see_body():
+    # if request.method == 'POST':
+    # blog_num = int(request.form['blog-id'])
+    # blog = Blog.query.all()
+    #     return redirect('/blog', blog=blog)
+    return render_template('/blog.html')#, blog=blog)
+
 
 
 if __name__ == ('__main__'):
