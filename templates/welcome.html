@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h3><a href="/blog">Submit a blog</a></h3>
+    <h3><a href="/">Home</a></h3>
+
+    <h1>Blog City Baby!</h1>
+    <h2>population: you</h2>
+
+    {% if blogs %}
+    <h2>Ye Olde Posts!!</h2>
+    <p>Read and Cringe!</p>
+        <ul>
+            {% for blog in blogs %}
+            <li><a href="/blog/blog.blog_id">{{ blog.title }}</a></li>
+             {{ blog.body }}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock %}
