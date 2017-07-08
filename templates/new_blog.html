@@ -4,12 +4,14 @@
     <h1>Blog Flog!</h1>
     <form action="/new_blog" method='post'>
         <label>Phresh Blog, Dog!</label>
-        <input type="text" name="blog_title" />
+        <input type="text" name="blog-title" />
         <label>What do you have to say?</label> 
-        <input type="textfield" name="body" />
+        <input type="textarea" name="body" />
+        <!--<textarea cols="50" rows="5" name="blog_title">   </textarea>-->
         <input type="submit" value="Blog It!" />
     </form>
 
+    <!--{#    <input type="hidden" name="blog-id" value='{{ blog.id }}'/>  #}-->
 
    
 {% endblock %}

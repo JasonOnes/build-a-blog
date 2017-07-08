@@ -17,6 +17,12 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
+    def __repr__(self):
+        return 'The {} blog contains {}.'.format(self.title, self.body)
+
+    def __str__(self):
+        return 'The {} blog contains {}.'.format(self.title, self.body)
+
 @app.route('/', methods=['GET', 'POST'])
 def main_page():
     if request.method == 'POST':
@@ -29,7 +35,7 @@ def main_page():
 def blog():
     if request.method == 'POST':
         #blog = Blog.query.get(blog_id)
-        title = request.form['blog_title']
+        title = request.form['blog-title']
         body = request.form['body']
         new_blog = Blog(title, body)
         db.session.add(new_blog)
@@ -40,13 +46,24 @@ def blog():
     
     return render_template('new_blog.html')#, blogs=blogs)
 
-@app.route('/blog', methods=['GET', 'POST'])
+# @app.route('/blog_pass', methods=['POST'])
+# def pass_off():
+#     blogid = Blog.query(id)
+#     return redirect('/blog/?blogid='+ blogid)
+
+@app.route('/blog', methods=['GET','POST'])
 def see_body():
-    # if request.method == 'POST':
-    # blog_num = int(request.form['blog-id'])
-    # blog = Blog.query.all()
-    #     return redirect('/blog', blog=blog)
-    return render_template('/blog.html')#, blog=blog)
+    # # if request.method == 'POST':
+    # # blog_num = int(request.form['blog-id'])
+    # blog = Blog.query.get(blog.id)
+    # #     return redirect('/blog', blog=blog)
+    # #blog_id = int(request.form['blog-id'])
+    # blog_title = request.form['blog-title']
+    # blogx = Blog.query.get(blog_title)
+    # #blogx = Blog.query.filter_by(blog.title).all()
+
+    if request.method == 'GET':
+        return render_template('/blog.html', blog=blog)
 
 
 
