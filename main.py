@@ -1,4 +1,4 @@
-from flask import Flask,request, redirect, render_template, url_for
+from flask import Flask, request, redirect, render_template, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -6,11 +6,11 @@ app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI']= 'mysql+pymysql://build-a-blog:Superfly@localhost:3306/build-a-blog'
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
+app.secret_key = 'SHHH,itsaSECRET'
 
 class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
-    #body = db.Column(db.String(1000))
     body = db.Column(db.Text)
 
     def __init__(self, title, body):
@@ -31,63 +31,34 @@ def main_page():
 
     return render_template('welcome.html', blogs=blogs)
     
-@app.route('/new_blog', methods=['GET', 'POST'])
-def bloggit():
-#     if request.method == 'POST':
-#         #blog = Blog.query.get(blog_id)
-#         title = request.form['blog-title']
-#         body = request.form['body']
-#         new_blog = Blog(title, body)
-#         db.session.add(new_blog)
-#         db.session.commit()
-#         blogs = Blog.query.all()
-# #put error flashes here?
-#         if not title:
-#             # flash error message
-#             pass
-#         elif not body:
-#             # flash error message 2
-#             pass
-#         return redirect('/')#, blogs=blogs)
-    
-    return render_template('/new_blog.html')#, blogs=blogs)
+@app.route('/new_blog')
+def bloggit():    
+    return render_template('/new_blog.html')
 
-# @app.route('/blog_pass', methods=['POST'])
-# def pass_off():
-#     blogid = Blog.query(id)
-#     return redirect('/blog/?blogid='+ blogid)
-
-@app.route('/blog', methods=['POST'])
+@app.route('/blog', methods=['GET', 'POST'])
+# Once the blog has been written it commits to databas before view is rendered thus letting us reference by created id
 def see_body():
-   
     title = request.form['blog-title']
+    if not title:
+        flash("You need to title your post!", "error")
+        return redirect('/new_blog')#, body=body)
+    """Can't redirect with blog.body because it hasn't been insantiated yet, but can't instaniate without 
+    title and body so..."""
     body = request.form['body']
+    if not body:
+        flash("YOu haven't actually blogged about anything!", "error")
+        return redirect('/new_blog')
     new_blog = Blog(title, body)
     db.session.add(new_blog)
     db.session.commit()
     print(new_blog.id)
     return render_template('/blog.html', blog=new_blog)
 
-@app.route('/blog?<blog_id>', methods=['GET', 'POST'])
-   
+@app.route('/blog?<blog_id>')
+#  gets the blogs id from the query paramater and then passes that blog to template
 def blog_page(blog_id):
-    #blogid = Blog.query.get(id)
-    #print(blogid)
-    print(blog_id)
-    # if blogid == None:
-    #     #error
-    #     pass
-    # elif blog_id == blogid:
     check_blog = Blog.query.filter_by(id=blog_id).first()
     return render_template('/blog.html', blog=check_blog)
-    """blogid = request.args.get(id)
-    blog = Blog.query.filter_by(id=blogid).first()"""
-    #blog_title = request.args.get('blog-title')
-    # blog_body = request.args.get('body')
-    #blog_x = Blog.query.filter_by(title=blog_title).first() 
-    #blog_id = request.args.get('id')
-    #return render_template(url_for('see_body', id=blog.id), blog=blog)
-    #return render_template('/blog.html', blog=blog)
 
 if __name__ == ('__main__'):
     app.run()

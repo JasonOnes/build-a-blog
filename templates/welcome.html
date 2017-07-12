@@ -12,8 +12,6 @@
     <p>Read and Cringe!</p>
         <ul>
             {% for blog in blogs %}
-            <!--{# _id = request.args.get('id') #}-->
-            <!--<li><a href="/blog"+ "?" + str({{ request.args.get('id') }})>{{ blog.title }}</a></li>-->
             <li><a href="{{ url_for('blog_page', blog_id=blog.id) }}">{{ blog.title }}</a></li>
              {{ blog.body|truncate(20) }}
             {% endfor %}

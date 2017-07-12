@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
  <h3><a href="/">Home</a></h3>
-
+ {% with messages = get_flashed_messages(with_categories=True) %}
+        <ul>
+            {% for category, message in messages %}
+            <li class="category">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endwith %}
     <h1>Blog Flog!</h1>
     <form action="/blog" method ='post'>
-    <!--<form action="/blog?" + str{{ request.args.get(id) }} method='post'>-->
         <label>Phresh Blog, Dog!</label>
         <input type="text" name="blog-title" />
         <label>What do you have to say?</label> 
-        <input type="textarea" name="body" />
-        <!--<textarea cols="50" rows="5" name="blog_title">   </textarea>-->
+        <textarea name="body"></textarea>
         <input type="submit" value="Blog It!" />
     </form>
 

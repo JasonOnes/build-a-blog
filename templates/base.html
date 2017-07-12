@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        .category {
+            color:red;
+        }
+        </style>
     <title>{{ title }}</title>
     {% block head %}
     {% endblock %}
@@ -9,6 +14,13 @@
 <body>
     
     {% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        <ul>
+            {% for category, message in messages %}
+            <li class="category">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endwith %}
     {% endblock %}
 </body>
 
