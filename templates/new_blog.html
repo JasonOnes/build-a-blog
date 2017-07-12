@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+ <h3><a href="/">Home</a></h3>
 
     <h1>Blog Flog!</h1>
-    <form action="/new_blog" method='post'>
+    <form action="/blog" method ='post'>
+    <!--<form action="/blog?" + str{{ request.args.get(id) }} method='post'>-->
         <label>Phresh Blog, Dog!</label>
         <input type="text" name="blog-title" />
         <label>What do you have to say?</label> 
