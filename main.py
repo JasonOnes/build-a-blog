@@ -31,23 +31,24 @@ def main_page():
 
     return render_template('welcome.html', blogs=blogs)
     
-@app.route('/new_blog')
-def bloggit():    
+@app.route('/new_blog', methods=['GET','POST'])
+def bloggit(**kwargs):    
     return render_template('/new_blog.html')
 
 @app.route('/blog', methods=['GET', 'POST'])
 # Once the blog has been written it commits to databas before view is rendered thus letting us reference by created id
 def see_body():
-    title = request.form['blog-title']
+    title = request.form['blogtitle']
+    body = request.form['body']
     if not title:
         flash("You need to title your post!", "error")
-        return redirect('/new_blog')#, body=body)
-    """Can't redirect with blog.body because it hasn't been insantiated yet, but can't instaniate without 
-    title and body so..."""
-    body = request.form['body']
+        #return redirect('/new_blog.html', body=body)
+        print(body)
+        return render_template('/new_blog.html', body=body)
     if not body:
         flash("YOu haven't actually blogged about anything!", "error")
-        return redirect('/new_blog')
+        print(title)
+        return render_template('/new_blog.html', title=title)
     new_blog = Blog(title, body)
     db.session.add(new_blog)
     db.session.commit()

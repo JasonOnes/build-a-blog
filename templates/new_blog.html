@@ -11,9 +11,9 @@
     <h1>Blog Flog!</h1>
     <form action="/blog" method ='post'>
         <label>Phresh Blog, Dog!</label>
-        <input type="text" name="blog-title" />
+        <input type="text" name="blogtitle" value="{{ title }}"/>
         <label>What do you have to say?</label> 
-        <textarea name="body"></textarea>
+        <textarea name="body">{{ body }}</textarea>
         <input type="submit" value="Blog It!" />
     </form>
 
