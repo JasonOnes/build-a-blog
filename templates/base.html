@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        .category {
-            color:red;
-        }
-        </style>
-    <title>{{ title }}</title>
+     <link rel= "stylesheet" type= "text/css" href= "static/stylin.css">
+    
+    <title>Blog-O-RAMA</title>
     {% block head %}
     {% endblock %}
     
@@ -17,7 +14,7 @@
     {% with messages = get_flashed_messages(with_categories=True) %}
         <ul>
             {% for category, message in messages %}
-            <li class="category">{{ message }}</li>
+            <li class="{{category}}">{{ message }}</li>
             {% endfor %}
         </ul>
         {% endwith %}

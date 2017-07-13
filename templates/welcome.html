@@ -8,11 +8,13 @@
     <h2>population: you</h2>
 
     {% if blogs %}
-    <h2>Ye Olde Posts!!</h2>
+    <h3>Ye Olde Posts!!</h3>
     <p>Read and Cringe!</p>
         <ul>
-            {% for blog in blogs %}
+            {% for blog in blogs|sort(attribute='entry_date', reverse = True) %}
             <li><a href="{{ url_for('blog_page', blog_id=blog.id) }}">{{ blog.title }}</a></li>
+             {{ blog.entry_date }}
+             <br>
              {{ blog.body|truncate(20) }}
             {% endfor %}
         </ul>
