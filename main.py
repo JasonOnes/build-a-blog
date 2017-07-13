@@ -23,15 +23,15 @@ class Blog(db.Model):
     def __repr__(self):
         return 'The {} blog contains {}.'.format(self.title, self.body)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')#, methods=['GET', 'POST'])
 def main_page():
-    if request.method == 'POST':
-        return render_template('welcome.html')
+    # if request.method == 'POST':
+    #     return render_template('welcome.html')
     blogs = Blog.query.all()
     return render_template('welcome.html', blogs=blogs)
     
-@app.route('/new_blog', methods=['GET','POST'])
-def bloggit(**kwargs):    
+@app.route('/new_blog')#, methods=['GET','POST'])
+def bloggit():    
     return render_template('/new_blog.html')
 
 @app.route('/blog', methods=['POST'])
