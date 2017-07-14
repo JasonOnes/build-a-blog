@@ -11,8 +11,9 @@
     <h3>Ye Olde Posts!!</h3>
     <p>Read and Cringe!</p>
         <ul>
-            {% for blog in blogs|sort(attribute='entry_date', reverse = True) %}
-            <li><a href="{{ url_for('blog_page', blog_id=blog.id) }}">{{ blog.title }}</a></li>
+           
+            {% for blog in blogs %}
+            <li><a href="{{ url_for('see_blog_page', blog_id=blog.id) }}">{{ blog.title }}</a></li>
              {{ blog.entry_date }}
              <br>
              {{ blog.body|truncate(20) }}
